@@ -1,0 +1,20 @@
+Executar a Criação do Scratch Org
+
+Agora que você tem certeza de que o Dev Hub está configurado 
+corretamente, execute novamente o comando para criar o Scratch Org. 
+Se você configurou o test-playground como o Dev Hub, o comando correto seria:
+
+sf org create scratch --definition-file config/project-scratch-def.json --alias test-playground --set-default --target-dev-hub test-playground
+
+
+------------
+DEPLOY:
+
+ sf project deploy start
+ 
+-----------
+Modelagem de dados:
+
+Seu novo campo Preço aparecerá na lista dos campos Propriedade. Na coluna Nome do campo, 
+aparecerá a informação Preço__c. A parte do “__c” é uma forma simples de saber que um 
+campo específico é personalizado.
