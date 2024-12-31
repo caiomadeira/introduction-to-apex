@@ -1,0 +1,40 @@
+/*
+ *
+Bulkification:
+O código usa um loop for para iterar sobre o objeto Trigger.new, que contém todas as oportunidades que foram inseridas ou atualizadas.
+As tarefas são acumuladas em uma lista (tasksToInsert), e o método insert é chamado apenas uma vez, independentemente do número de oportunidades.
+
+Condição de Filtragem:
+A condição if (opp.StageName == 'Closed Won') garante que apenas oportunidades com o estágio Closed Won tenham tarefas criadas.
+
+Tarefa Associada:
+A tarefa é criada com o campo WhatId configurado para o ID da oportunidade (opp.Id).
+
+Eficiência:
+Inserir todas as tarefas em um único comando insert tasksToInsert reduz o consumo de recursos e garante que o código respeite limites de governança do Salesforce. 
+ * 
+ * 
+ * 
+*/
+trigger ClosedOpportunityTrigger on Opportunity (after insert, after update) {
+    // Lista para armazenar as tarefas a serem criadas
+    List<Task> tasksToInsert = new List<Task>();
+    
+    // Iterar sobre as oportunidades afetadas
+    for (Opportunity opp : Trigger.new) {
+        // Verificar se o estágio é "Closed Won"
+        if (opp.StageName == 'Closed Won') {
+            // Criar uma nova tarefa associada à oportunidade
+            Task followUpTask = new Task(
+                Subject = 'Follow Up Test Task', // Assunto da tarefa
+                WhatId = opp.Id // Associar à oportunidade
+            );
+            tasksToInsert.add(followUpTask); // Adicionar à lista de tarefas
+        }
+    }
+    
+    // Inserir todas as tarefas de uma vez
+    if (!tasksToInsert.isEmpty()) {
+        insert tasksToInsert;
+    }
+}
