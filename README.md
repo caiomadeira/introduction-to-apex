@@ -26,4 +26,3 @@ A variável bind é precedida por dois pontos ( : ). É basicamente a possibilid
 
 ### Funções agregadas (Agregadores)
 Semelhante as funções de agregação do SQL (MAX, MIN, AVG, etc).
-
